@@ -4,14 +4,17 @@ from bs4 import BeautifulSoup
 def get_html(url):
     result = requests.get(url)
     return result.text
-
+abc = ''
 def get_data(html):
+    global abc
     soup = BeautifulSoup(html,'lxml')
-    h2 = soup.find('h1',{'class':'b-topic__title'})  #Заголовоу
+    h2 = soup.find('h1',{'class':'b-topic__title'})  #Заголовок
     h1 = soup.find('div', {'class':'b-text clearfix js-topic__text'})
-    h4 = soup.find('p',{})
-    print(h4)
-    h3 = 'Заголовок статьи:\n'+h2.text+'\n' + 'Статья:\n' + h1.text+'\n'
+    print(h2.text)
+    for i in soup.find_all('p'):
+        abc = abc + i.text
+   # print(abc)
+    h3 = 'Заголовок статьи:\n'+h2.text+'\n' + 'Статья:\n' + abc+'\n'
     #print(h3)
     f = open('text.txt','w',encoding='utf-8')
     f.write(h3)
